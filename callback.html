@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tesla-koppeling</title>
+<style>
+  body { font: 17px -apple-system, "Segoe UI", sans-serif; background: #f7f4ed; color: #23211d; margin: 0; padding: 40px 16px; }
+  main { max-width: 640px; margin: 0 auto; }
+  code { display: block; background: #fff; border: 1px solid #ddd5c6; border-radius: 8px; padding: 14px; word-break: break-all; font-size: 15px; margin: 12px 0; }
+  button { font: inherit; padding: 8px 16px; border-radius: 8px; border: 1px solid #b5afa3; background: #fff; cursor: pointer; }
+</style>
+<main>
+  <h1>Tesla-koppeling</h1>
+  <p id="msg">Kopieer deze code en plak hem in de terminal:</p>
+  <code id="code">–</code>
+  <button id="copy">Kopieer</button>
+</main>
+<script>
+  // Tesla stuurt na het inloggen terug met ?code=…; de code wordt hier alleen getoond, nergens heen gestuurd.
+  var p = new URLSearchParams(location.search), code = p.get('code');
+  if (code) document.getElementById('code').textContent = code + ' ' + (p.get('state') || '');
+  else document.getElementById('msg').textContent = 'Geen code ontvangen: ' + (p.get('error_description') || p.get('error') || 'onbekend');
+  document.getElementById('copy').onclick = function () { navigator.clipboard.writeText(document.getElementById('code').textContent); this.textContent = 'Gekopieerd'; };
+</script>
